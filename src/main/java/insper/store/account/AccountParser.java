@@ -4,27 +4,16 @@ import java.util.List;
 
 public class AccountParser {
 
-    public static Account to(AccountIn in) {
+    public static AccountOut to(Account in) {
         return in == null ? null :
-            Account.builder()
+            AccountOut.builder()
+                .id(in.id())
                 .name(in.name())
                 .email(in.email())
-                .password(in.password())
                 .build();
     }
 
-    public static AccountOut to(Account a) {
-        return a == null ? null :
-            AccountOut.builder()
-                .id(a.id())
-                .name(a.name())
-                .email(a.email())
-                .build();
+    public static List<AccountOut> to(List<Account> l) {
+        return l.stream().map(AccountParser::to).toList();
     }
-
-    public static List<AccountOut> to(List<Account> as) {
-        return as == null ? null :
-            as.stream().map(AccountParser::to).toList();
-    }
-
 }

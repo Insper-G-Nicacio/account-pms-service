@@ -12,14 +12,14 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 @Entity
-@Table(name = "account")
+@Table(name = "accounts")
 @Setter @Accessors(chain = true, fluent = true)
 @NoArgsConstructor @AllArgsConstructor
 public class AccountModel {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     private String id;
 
     @Column(name = "name")
@@ -28,20 +28,11 @@ public class AccountModel {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "sha256")
-    private String sha256;
-
-    public AccountModel(Account a) {
-        this.id = a.id();
-        this.name = a.name();
-        this.email = a.email();
-    }
-
     public Account to() {
         return Account.builder()
-            .id(this.id)
-            .name(this.name)
-            .email(this.email)
+            .id(id)
+            .name(name)
+            .email(email)
             .build();
     }
 
