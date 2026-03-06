@@ -16,4 +16,13 @@ public class AccountParser {
     public static List<AccountOut> to(List<Account> l) {
         return l.stream().map(AccountParser::to).toList();
     }
+
+    public static Account to(AccountIn in) {
+        return in == null ? null :
+            Account.builder()
+                .name(in.name())
+                .email(in.email())
+                .build();
+    }
+
 }

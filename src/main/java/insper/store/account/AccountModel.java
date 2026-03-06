@@ -36,4 +36,10 @@ public class AccountModel {
             .build();
     }
 
+    public AccountModel(Account a) {
+        this.id = a.id();
+        this.name = a.name();
+        this.email = a.email();
+    }
+
 }

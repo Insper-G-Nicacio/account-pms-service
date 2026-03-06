@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class AccountResource implements AccountController {
@@ -14,13 +15,13 @@ public class AccountResource implements AccountController {
 
     @Override
     public ResponseEntity<Void> create(AccountIn in) {
-        // TODO Auto-generated method stub
-        return null;
+        final Account created = accountService.create(AccountParser.to(in));
+        return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(created.id()).toUri()).build();
     }
 
     @Override
     public ResponseEntity<Void> delete(String id) {
-        // TODO Auto-generated method stub
+        accountService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -40,15 +41,8 @@ public class AccountResource implements AccountController {
 
     @Override
     public ResponseEntity<AccountOut> findById(String id) {
-        // just an example
-        AccountOut out = AccountOut.builder()
-            .name("John")
-            .email("JAlbert@xpto.gov")
-            .id("1345")
-            .build();
-        return ResponseEntity.ok(
-            out
-        );
+        Account out = accountService.findById(id);
+        return out == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(AccountParser.to(out));
     }
 
 }
